@@ -5,11 +5,19 @@
         {{location.name}}
       </li>
     </ul>
-    <ul class="character-list">
+    <ul v-if="characters && characters.length" class="character-list">
       <li v-for="character in characters" :key="character.id">
         {{character.name}}
       </li>
     </ul>
+    <div v-else class="character-list empty">
+      <template v-if="Array.isArray(characters)">
+        There are no residents in the selected location
+      </template>
+      <template v-else>
+        Select a location to view its residents
+      </template>
+    </div>
   </div>
 </template>
 
@@ -30,9 +38,15 @@ export default {
         return characterId
       })
 
-      fetch(`https://rickandmortyapi.com/api/character/${characterIds}`)
-        .then(nonConsumableResponse => nonConsumableResponse.json())
-        .then(response => { this.characters = response })
+      if (characterIds.length) {
+        fetch(`https://rickandmortyapi.com/api/character/${characterIds}`)
+          .then(nonConsumableResponse => nonConsumableResponse.json())
+          .then(response => {
+            this.characters = Array.isArray(response) ? response : [response]
+          })
+      } else {
+        this.characters = []
+      }
     }
   }
 }
