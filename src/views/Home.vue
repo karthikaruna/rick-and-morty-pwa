@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-    <Locations v-bind:locations="locations" />
-  </div>
+  <Locations v-bind:locations="locations" />
 </template>
 
 <script>
