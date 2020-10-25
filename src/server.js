@@ -1,8 +1,8 @@
-import { Server, Model } from 'miragejs'
+import { createServer, Model } from 'miragejs'
 import { characters, locations } from './test-data'
 
-export function makeServer (environment = 'test') {
-  const server = new Server({
+export function makeServer ({ environment = 'test' } = {}) {
+  const server = createServer({
     environment,
 
     models: {
