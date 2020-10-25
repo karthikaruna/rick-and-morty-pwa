@@ -1,33 +1,28 @@
-import { createServer, Model } from 'miragejs'
+import { createServer } from 'miragejs'
 import { characters, locations } from './test-data'
 
 export function makeServer ({ environment = 'test' } = {}) {
   const server = createServer({
     environment,
 
-    models: {
-      character: Model,
-      location: Model
-    },
-
-    seeds (server) {
-      characters.forEach(character => server.create('character', character))
-      locations.forEach(location => server.create('location', location))
-    },
-
     routes () {
       this.namespace = 'api'
 
-      this.get('/character', schema => {
-        return schema.characters.all()
+      this.get('/character', () => {
+        return { results: characters }
       })
 
       this.get('/character/:id', (schema, request) => {
-        return schema.characters.find(request.params.id)
+        const requestedEntityIds = String(request.params.id).split(',')
+        const areMultipleEntitiesRequested = requestedEntityIds.length > 1
+
+        return areMultipleEntitiesRequested
+          ? characters.filter(character => requestedEntityIds.includes(String(character.id)))
+          : characters.find(character => request.params.id === String(character.id))
       })
 
-      this.get('/location', schema => {
-        return schema.locations.all()
+      this.get('/location', () => {
+        return { results: locations }
       })
     }
   })
