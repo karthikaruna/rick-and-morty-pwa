@@ -7,7 +7,9 @@
     </ul>
     <ul v-if="characters && characters.length" class="character-list">
       <li v-for="character in characters" :key="character.id">
-        {{character.name}}
+        <router-link :to="{ name: 'Character', params: { id: character.id }}">
+          {{character.name}}
+        </router-link>
       </li>
     </ul>
     <div v-else class="character-list empty">
