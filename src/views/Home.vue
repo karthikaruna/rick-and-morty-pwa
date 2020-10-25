@@ -5,6 +5,7 @@
 <script>
 // @ is an alias to /src
 import Locations from '@/components/Locations.vue'
+import { fetchResources } from '@/utils'
 
 export default {
   name: 'Home',
@@ -17,8 +18,7 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    fetch('https://rickandmortyapi.com/api/location/')
-      .then(nonConsumableResponse => nonConsumableResponse.json())
+    fetchResources('location')
       .then(response => {
         next(vm => vm.setData(response.results))
       })

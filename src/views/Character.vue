@@ -4,6 +4,7 @@
 
 <script>
 import CharacterDetails from '@/components/CharacterDetails.vue'
+import { fetchResources } from '@/utils'
 
 export default {
   name: 'Character',
@@ -16,8 +17,7 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    fetch(`https://rickandmortyapi.com/api/character/${to.params.id}`)
-      .then(nonConsumableResponse => nonConsumableResponse.json())
+    fetchResources(`character/${to.params.id}`)
       .then(response => {
         next(vm => vm.setData(response))
       })

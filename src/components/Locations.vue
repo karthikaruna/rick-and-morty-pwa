@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { fetchResources } from '@/utils'
+
 export default {
   name: 'Locations',
   props: ['locations'],
@@ -41,8 +43,7 @@ export default {
       })
 
       if (characterIds.length) {
-        fetch(`https://rickandmortyapi.com/api/character/${characterIds}`)
-          .then(nonConsumableResponse => nonConsumableResponse.json())
+        fetchResources(`character/${characterIds}`)
           .then(response => {
             this.characters = Array.isArray(response) ? response : [response]
           })
