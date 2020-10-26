@@ -45,7 +45,8 @@ export default {
       if (characterIds.length) {
         fetchResources(`character/${characterIds}`)
           .then(response => {
-            this.characters = Array.isArray(response) ? response : [response]
+            this.characters = (Array.isArray(response) ? response : [response])
+              .filter(character => ['Alive', 'Dead'].includes(character.status))
           })
       } else {
         this.characters = []
