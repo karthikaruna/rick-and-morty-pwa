@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
 import Locations from '@/components/Locations.vue'
 import CharacterDetails from '@/components/CharacterDetails.vue'
-import { locations, characters } from '@/test-data'
+import { locations, characters } from '../test-data'
 import flushPromises from 'flush-promises'
 import '../setup-fetch-interceptor'
 

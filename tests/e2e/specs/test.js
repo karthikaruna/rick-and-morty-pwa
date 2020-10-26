@@ -1,5 +1,5 @@
 // https://docs.cypress.io/api/introduction/api.html
-import { locations, characters } from '../../../src/test-data'
+import { locations, characters } from '../../test-data'
 
 describe('User journey', () => {
   it('Renders all locations at the root url', () => {
