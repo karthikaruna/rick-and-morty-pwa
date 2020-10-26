@@ -1,4 +1,4 @@
-import { characters, locations } from '@/test-data'
+import { characters, locations } from './test-data'
 
 function fetchify (data) {
   return Promise.resolve({
