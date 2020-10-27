@@ -5,13 +5,13 @@ describe('User journey', () => {
   it('Renders all locations at the root url', () => {
     cy.visit('/')
     cy.get('.location-list li').should('have.length', locations.length)
-    cy.get('.character-list').should('contain.text', 'Select a location to view its residents')
+    cy.get('.character-list').should('contain.text', 'Select a location from the left to view its residents')
   })
 
   it('Renders the residents in the same page when a location is clicked', () => {
     cy.visit('/')
     cy.get('.location-list li:nth-child(2)').click()
-    cy.get('.character-list li').should('have.length', 1)
+    cy.get('.character-list>li').should('have.length', 1)
     cy.get('.location-list li:nth-child(12)').click()
     cy.get('.character-list').should('contain.text', 'There are no residents in the selected location')
   })
@@ -22,8 +22,8 @@ describe('User journey', () => {
     const residentId = residentUrlChunks[residentUrlChunks.length - 1]
 
     cy.visit('/')
-    cy.get('.location-list li:nth-child(2)').click()
-    cy.get('.character-list li:first-child').click()
+    cy.get('.location-list>li:nth-child(2)').click()
+    cy.get('.character-list>li:first-child').click()
     cy.url().should('contain', `character/${residentId}`)
     cy.get('#app').should('contain.text', characters[residentId - 1].name)
   })
