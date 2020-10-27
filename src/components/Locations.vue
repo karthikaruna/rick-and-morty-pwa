@@ -11,13 +11,16 @@
     <ul v-if="characters && characters.length" class="character-list">
       <li v-for="character in characters" :key="character.id">
         <router-link :to="{ name: 'Character', params: { id: character.id }}">
-          {{character.name}}
+          <CharacterThumb v-bind:character="character" />
         </router-link>
       </li>
     </ul>
     <div v-else class="character-list empty">
       <template v-if="Array.isArray(characters)">
-        There are no residents in the selected location
+        <div class="call-for-action">
+          <img src="../assets/no-residents-found.png" alt="No residents found">
+          <p>There are no residents in the selected location</p>
+        </div>
       </template>
       <template v-else>
         <div class="call-for-action">
@@ -31,10 +34,14 @@
 
 <script>
 import { fetchResources } from '@/utils'
+import CharacterThumb from '@/components/CharacterThumb.vue'
 
 export default {
   name: 'Locations',
   props: ['locations'],
+  components: {
+    CharacterThumb
+  },
   data () {
     return {
       characters: null
@@ -78,6 +85,14 @@ export default {
   border-left: 2px dashed silver;
   flex: 1;
   overflow-y: auto;
+}
+.character-list>li {
+  display: inline-block;
+  margin: 12px;
+  width: calc(50% - 24px);
+}
+.character-list>li>a {
+  display: block;
 }
 .character-list.empty {
   display: flex;
