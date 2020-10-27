@@ -13,7 +13,7 @@ describe('Locations.vue', () => {
     })
 
     expect(wrapper.element.querySelectorAll('.location-list li').length).to.equal(locations.length)
-    expect(wrapper.element.querySelector('.location-list').textContent.trim())
+    expect(wrapper.element.querySelector('.location-list').textContent.replace(/→/g, '').trim())
       .to.equal(locations.map(x => x.name).join('  '))
   })
 
@@ -36,5 +36,9 @@ describe('CharacterDetails.vue', () => {
     })
 
     expect(wrapper.text()).to.include(character.name)
+    expect(wrapper.text()).to.include(character.status)
+    expect(wrapper.text()).to.include(character.species)
+    expect(wrapper.text()).to.include(character.gender)
+    expect(wrapper.text()).to.include(character.type)
   })
 })
