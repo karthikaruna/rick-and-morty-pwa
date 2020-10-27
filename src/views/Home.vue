@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <Locations v-bind:locations="locations" />
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Locations from '@/components/Locations.vue'
+import { fetchResources } from '@/utils'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    Locations
+  },
+  data () {
+    return {
+      locations: undefined
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    fetchResources('location')
+      .then(response => {
+        next(vm => vm.setData(response.results))
+      })
+  },
+  methods: {
+    setData (locations) {
+      this.locations = locations
+    }
   }
 }
 </script>
