@@ -84,14 +84,13 @@ const getCachedApiResponse = request => {
 }
 
 const networkThenCache = async request => {
-  const { method, url, destination } = request
+  const { method, url } = request
 
   try {
     const response = await fetch(request)
     const json = await response.clone().json()
 
-    // images can't be cached because of response type opaque
-    if (method === 'GET' && destination !== 'image') {
+    if (method === 'GET') {
       cacheApiResponse({ url, json })
     }
 
@@ -111,9 +110,10 @@ const activateHandler = e => {
 
 const fetchHandler = async e => {
   const { request } = e
-  const { url } = request
+  const { url, destination } = request
 
-  if (url.includes('/api')) {
+  // images can't be cached because of response type opaque
+  if (url.includes('/api') && destination !== 'image') {
     e.respondWith(getCachedOrNetworkApiResponse(request))
   }
 }
