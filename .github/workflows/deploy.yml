@@ -1,12 +1,12 @@
-name: Run tests
+name: Deploy
 
 on:
   push:
     branches:
-      - "*"
+      - main
 
 jobs:
-  run-tests:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -14,14 +14,17 @@ jobs:
       - uses: actions/setup-node@master
       - name: Install dependencies
         run: npm install
-      - name: Run unit tests
-        run: npm run test:unit
-      - name: Run e2e tests
-        uses: cypress-io/github-action@master
+      - name: Build
+        run: npm run build
+      - name: Download artifact
+        uses: actions/download-artifact@master
         with:
-          start: npm run serve
-          wait-on: http://localhost:8080/
-          config_file: cypress.json
-          spec: "tests/e2e/**/*"
+          name: dist
+          path: dist
+      - name: Deploy
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
         env:
-          CYPRESS_baseUrl: http://localhost:8080/
+          FIREBASE_TOKEN: ${{secrets.FIREBASE_TOKEN}}
+          PROJECT_ID: ${{secrets.PROJECT_ID}}
