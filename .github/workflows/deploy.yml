@@ -12,8 +12,8 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
       - name: Installing dependencies
-      - run: npm install
+        run: npm install
       - name: Running unit tests
-      - run: npm run test:unit
+        run: npm run test:unit
       - name: Running e2e tests
-      - run: npm run test:e2e
+        run: npm run test:e2e
