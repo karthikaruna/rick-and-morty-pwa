@@ -16,11 +16,6 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      - name: Download artifact
-        uses: actions/download-artifact@master
-        with:
-          name: dist
-          path: dist
       - name: Deploy
         uses: w9jds/firebase-action@master
         with:
