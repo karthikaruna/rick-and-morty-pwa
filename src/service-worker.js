@@ -3,6 +3,8 @@ workbox.core.setCacheNameDetails({ prefix: 'lb-trial' })
 workbox.core.skipWaiting()
 workbox.core.clientsClaim()
 
+workbox.routing.registerNavigationRoute('/index.html')
+
 const version = 1
 const IDBConfig = {
   name: 'lb_trial',
