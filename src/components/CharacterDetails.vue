@@ -1,5 +1,5 @@
-<template v-if="characterDetails">
-  <div class="component-container">
+<template>
+  <div v-if="characterDetails" class="component-container">
     <div class="dp-container">
       <img v-bind:src="characterDetails.image" v-bind:alt="characterDetails.name">
     </div>
@@ -10,7 +10,7 @@
           <tr>
             <td>Created at</td>
             <td>
-              {{new Intl.DateTimeFormat('en', { day: '2-digit', month: 'short', year: 'numeric' })
+              {{characterDetails.created && new Intl.DateTimeFormat('en', { day: '2-digit', month: 'short', year: 'numeric' })
                 .format(new Date(characterDetails.created))}}
             </td>
           </tr>
