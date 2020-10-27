@@ -1,8 +1,33 @@
 <template>
   <div id="app">
-    <router-view/>
+    <transition
+      :name="transitionName"
+      mode="out-in"
+    >
+      <router-view/>
+    </transition>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'App',
+  data () {
+    return {
+      transitionName: undefined
+    }
+  },
+  created () {
+    this.$router.beforeEach((to, from, next) => {
+      const toDepth = to.path.split('/').length
+      const fromDepth = from.path.split('/').length
+
+      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+      next()
+    })
+  }
+}
+</script>
 
 <style>
 html,
@@ -93,5 +118,28 @@ body,
 }
 .card:hover:before {
   transform: scale(2.15);
+}
+
+/* route transitions */
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition-duration: 0.25s;
+  transition-property: height, opacity, transform;
+  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+  overflow: hidden;
+}
+
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(2em, 0);
+}
+
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-2em, 0);
 }
 </style>
