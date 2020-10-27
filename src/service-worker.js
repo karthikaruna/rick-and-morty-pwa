@@ -88,11 +88,10 @@ const networkThenCache = async request => {
 
   try {
     const response = await fetch(request)
-    const json = destination === 'image'
-      ? await response.clone().blob()
-      : await response.clone().json()
+    const json = await response.clone().json()
 
-    if (method === 'GET') {
+    // images can't be cached because of response type opaque
+    if (method === 'GET' && destination !== 'image') {
       cacheApiResponse({ url, json })
     }
 
