@@ -84,11 +84,13 @@ const getCachedApiResponse = request => {
 }
 
 const networkThenCache = async request => {
-  const { method, url } = request
+  const { method, url, destination } = request
 
   try {
     const response = await fetch(request)
-    const json = await response.clone().json()
+    const json = await destination === 'image'
+      ? response.clone().blob()
+      : response.clone().json()
 
     if (method === 'GET') {
       cacheApiResponse({ url, json })
