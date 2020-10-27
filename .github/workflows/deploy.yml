@@ -9,11 +9,19 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Checking out
+        uses: actions/checkout@master
       - uses: actions/setup-node@master
       - name: Installing dependencies
         run: npm install
       - name: Running unit tests
         run: npm run test:unit
       - name: Running e2e tests
-        run: npm run test:e2e
+        uses: cypress-io/github-action@master
+        with:
+          start: npm run serve
+          wait-on: http://localhost:8080/
+          config_file: cypress.json
+          spec: "tests/e2e/**/*"
+        env:
+          CYPRESS_baseUrl: http://localhost:8080/
