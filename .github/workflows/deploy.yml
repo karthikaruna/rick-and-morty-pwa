@@ -9,14 +9,14 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Checking out
+      - name: Checkout
         uses: actions/checkout@master
       - uses: actions/setup-node@master
-      - name: Installing dependencies
+      - name: Install dependencies
         run: npm install
-      - name: Running unit tests
+      - name: Run unit tests
         run: npm run test:unit
-      - name: Running e2e tests
+      - name: Run e2e tests
         uses: cypress-io/github-action@master
         with:
           start: npm run serve
