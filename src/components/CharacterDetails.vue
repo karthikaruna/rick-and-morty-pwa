@@ -32,11 +32,11 @@
           </tr>
           <tr>
             <td>Origin</td>
-            <td>{{characterDetails.origin.name}}</td>
+            <td>{{characterDetails.origin && characterDetails.origin.name}}</td>
           </tr>
           <tr>
             <td>Current location</td>
-            <td>{{characterDetails.location.name}}</td>
+            <td>{{characterDetails.location && characterDetails.location.name}}</td>
           </tr>
         </tbody>
       </table>
